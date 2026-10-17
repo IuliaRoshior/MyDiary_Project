@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f7f4">
+  <meta name="description" content="My Diary, a calm space for organized days. A task planner with a calendar and progress insights.">
+  <title>My Diary · Make space for what matters</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="/static/js/app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m14 18-6-6 6-6"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="m10 18 6-6-6-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3ZM19 17l.6 1.4L21 19l-1.4.6L19 21l-.6-1.4L17 19l1.4-.6L19 17Z"/></symbol>
+    <symbol id="i-trending-up" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8M15 7h6v6"/></symbol>
+    <symbol id="i-trending-down" viewBox="0 0 24 24"><path d="m3 7 6 6 4-4 8 8M15 17h6v-6"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M12 20h9M16 4l4 4-11 11-5 1 1-5L16 4Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2m3 0-1 15H6L5 6M10 10v7M14 10v7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.8L21 9.7l-4.5 4.4 1.1 6.3L12 17.4l-5.6 3 1.1-6.3L3 9.7l6.2-.9L12 3Z"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5 5.5-5.5"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Task creation and navigation">
+      <div class="brand-block">
+        <div class="brand-mark"><span class="brand-sun">✳</span> PERSONAL PLANNER <span class="brand-dot"></span> EST. 2026</div>
+        <h1 class="brand-name">My<br><em>Diary.</em></h1>
+        <p class="brand-subtitle">A little more intention.<br>A lot more done.</p>
+      </div>
+
+      <nav class="side-nav" aria-label="Views">
+        <button class="side-link active" id="navToday" type="button"><svg class="icon"><use href="#i-calendar"/></svg><span>My day</span><span class="nav-indicator"></span></button>
+        <button class="side-link" id="navAll" type="button"><svg class="icon"><use href="#i-list"/></svg><span>All tasks</span><span class="nav-count" id="navTotal">0</span></button>
+        <button class="side-link" id="navCompleted" type="button"><svg class="icon"><use href="#i-check-circle"/></svg><span>Completed</span></button>
+      </nav>
+
+      <section class="create-section" aria-labelledby="createTitle">
+        <div class="eyebrow section-caption">YOUR DAILY FOCUS <span>01 / CREATE</span></div>
+        <h2 class="create-title" id="createTitle">Make a task<span class="accent-period">.</span></h2>
+        <form id="createForm" class="task-form">
+          <label for="newTitle">Task name <span class="required">*</span></label>
+          <input id="newTitle" name="title" placeholder="What needs to get done?" type="text" maxlength="120" autocomplete="off" required>
+          <label for="newDate">Due date</label>
+          <div class="input-icon-wrap"><svg class="icon"><use href="#i-calendar"/></svg><input id="newDate" name="due_date" type="date" required></div>
+          <label for="newPriority">Priority</label>
+          <select id="newPriority" name="priority"><option value="medium">Medium priority</option><option value="high">High priority</option><option value="low">Low priority</option></select>
+          <label for="newDescription">Notes <span class="optional">optional</span></label>
+          <textarea id="newDescription" name="description" rows="2" placeholder="A little context…" maxlength="1000"></textarea>
+          <button class="primary-button" id="addTaskButton" type="submit"><svg class="icon"><use href="#i-plus"/></svg> Create task <span>↗</span></button>
+        </form>
+      </section>
+
+      <div class="sidebar-footer"><span class="quote-mark">“</span><p>Small steps become<br>remarkable days.</p><span class="quote-rule"></span></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><div class="topbar-crumb">MY WORKSPACE <span>/</span> OVERVIEW</div><div class="topbar-right"><span class="live-dot"></span> YOUR SPACE TO GROW <span class="topbar-avatar">M.</span></div></header>
+      <section class="intro" aria-labelledby="overviewTitle">
+        <div class="eyebrow">THE BIG PICTURE <span class="intro-line"></span> <span id="weekdayLabel">TODAY</span></div>
+        <h2 id="overviewTitle">Make today <em>count.</em></h2>
+        <p>Every little thing you finish is progress worth noticing.</p>
+      </section>
+
+      <section class="overview-metrics" aria-label="Summary">
+        <article class="mini-metric"><span class="mini-label">TOTAL TASKS</span><div><strong id="totalCount">0</strong><span class="metric-icon blue"><svg class="icon"><use href="#i-list"/></svg></span></div><small>Things on your list</small></article>
+        <article class="mini-metric"><span class="mini-label">COMPLETED</span><div><strong id="completedCount">0</strong><span class="metric-icon green"><svg class="icon"><use href="#i-check"/></svg></span></div><small>Little victories</small></article>
+        <article class="mini-metric"><span class="mini-label">REMAINING</span><div><strong id="activeCount">0</strong><span class="metric-icon peach"><svg class="icon"><use href="#i-clock"/></svg></span></div><small>One at a time</small></article>
+      </section>
+
+      <section class="progress-section" aria-labelledby="progressTitle">
+        <div class="section-heading"><div><div class="eyebrow">02 / YOUR MOMENTUM</div><h3 id="progressTitle">Task progress</h3></div><span class="decorative-cross">✳</span></div>
+        <div class="progress-list">
+          <div class="progress-item"><div class="progress-label"><span>Completed tasks</span><span id="completedBarLabel">0 of 0</span></div><div class="progress-track"><div class="progress-fill completed-fill" id="completedBar" style="width:0%"></div></div></div>
+          <div class="progress-item"><div class="progress-label"><span>Finished on time</span><span id="onTimeBarLabel">0 of 0</span></div><div class="progress-track"><div class="progress-fill ontime-fill" id="onTimeBar" style="width:0%"></div></div></div>
+          <div class="progress-item"><div class="progress-label"><span>Currently overdue</span><span id="overdueBarLabel">0 of 0</span></div><div class="progress-track"><div class="progress-fill overdue-fill" id="overdueBar" style="width:0%"></div></div></div>
+        </div>
+      </section>
+
+      <section class="insights-section" aria-labelledby="insightsTitle">
+        <div class="section-heading compact"><div><div class="eyebrow">03 / BY THE NUMBERS</div><h3 id="insightsTitle">Year in review <span id="displayYear"></span></h3></div><span class="muted-link">THE JOURNEY SO FAR</span></div>
+        <div class="insight-grid">
+          <article class="insight-card positive">
+            <div class="insight-top"><span class="insight-icon"><svg class="icon"><use href="#i-check-circle"/></svg></span><span class="insight-category">TASKS COMPLETED</span></div>
+            <div class="insight-number" id="yearCompleted">0</div>
+            <div class="insight-bottom"><span class="insight-change" id="yearCompletedChange">First year of tracking</span><span>this year</span></div>
+          </article>
+          <article class="insight-card warning">
+            <div class="insight-top"><span class="insight-icon"><svg class="icon"><use href="#i-clock"/></svg></span><span class="insight-category">FINISHED LATE</span></div>
+            <div class="insight-number" id="yearLate">0</div>
+            <div class="insight-bottom"><span class="insight-change" id="yearLateChange">First year of tracking</span><span>this year</span></div>
+          </article>
+        </div>
+        <article class="chart-card"><div class="chart-top"><div><span class="mini-label">MONTHLY ACTIVITY</span><h4>Consistency looks good on you.</h4></div><span class="chart-legend"><i></i> Finished tasks</span></div><div id="activityChart" class="bar-chart" role="img" aria-label="Monthly completed tasks chart"></div></article>
+      </section>
+
+      <div class="main-footer"><span>MADE FOR THE EVERYDAY MOMENTS</span><span>✳</span><span>ONE DAY AT A TIME</span></div>
+    </main>
+
+    <aside class="right-panel" aria-label="Calendar and task list">
+      <div class="right-header"><div class="eyebrow">04 / YOUR CALENDAR</div><span class="calendar-top-icon"><svg class="icon"><use href="#i-calendar"/></svg></span></div>
+      <section class="calendar-card" aria-labelledby="calendarTitle">
+        <div class="calendar-header"><div><p class="small-overline">THE DAYS AHEAD</p><h2 id="calendarTitle">October 2026</h2></div><div class="calendar-actions"><button class="icon-button" id="prevMonth" type="button" aria-label="Previous month"><svg class="icon"><use href="#i-arrow-left"/></svg></button><button class="icon-button" id="nextMonth" type="button" aria-label="Next month"><svg class="icon"><use href="#i-arrow-right"/></svg></button></div></div>
+        <div class="weekdays" aria-hidden="true"><span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span><span>SU</span></div>
+        <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Select a day"></div>
+        <div class="calendar-footer"><div><span class="legend-dot has-tasks"></span> Has tasks</div><div><span class="legend-dot today-dot"></span> Today</div><button type="button" id="jumpToday">Go to today <span>↗</span></button></div>
+      </section>
+
+      <section class="daily-section" aria-labelledby="taskListTitle">
+        <div class="daily-title-row"><div><div class="eyebrow">05 / THE TO-DO LIST</div><h2 id="taskListTitle">Your tasks<span class="accent-period">.</span></h2></div><span class="task-count" id="dayTaskCount">0 TASKS</span></div>
+        <div class="selected-date-row"><span id="selectedDateLabel">Today</span><span class="selected-date-icon"><svg class="icon"><use href="#i-sparkle"/></svg></span></div>
+        <div class="task-controls"><div class="task-tabs" role="group" aria-label="Filter tasks"><button type="button" data-filter="all" class="selected">All</button><button type="button" data-filter="active">To do</button><button type="button" data-filter="completed">Done</button></div><button id="searchToggle" class="icon-button search-toggle" type="button" aria-label="Search tasks" aria-expanded="false"><svg class="icon"><use href="#i-search"/></svg></button></div>
+        <div id="searchWrap" class="search-wrap" hidden><label class="sr-only" for="taskSearch">Search tasks</label><input id="taskSearch" type="search" placeholder="Search by name or note…" autocomplete="off"></div>
+        <div class="tasks-list" id="tasksList" aria-live="polite"><div class="loading-state">Gathering your tasks…</div></div>
+        <div class="task-list-footer"><span id="taskFooter">Showing tasks for your selected day</span><button id="addTaskShortcut" type="button"><svg class="icon"><use href="#i-plus"/></svg> New task</button></div>
+      </section>
+      <div class="right-footer">YOUR TIME IS YOURS. USE IT WELL. <span>✳</span></div>
+    </aside>
+  </div>
+
+  <dialog id="editDialog" class="edit-dialog" aria-labelledby="editTitle"><form id="editForm" class="edit-form"><div class="modal-top"><div><div class="eyebrow">REFINE THE DETAILS</div><h2 id="editTitle">Edit task<span class="accent-period">.</span></h2></div><button type="button" class="icon-button" id="closeDialog" aria-label="Close dialog"><svg class="icon"><use href="#i-close"/></svg></button></div><input type="hidden" id="editId"><label for="editTaskTitle">Task name</label><input id="editTaskTitle" required maxlength="120"><label for="editTaskDate">Due date</label><input id="editTaskDate" type="date" required><label for="editTaskPriority">Priority</label><select id="editTaskPriority"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select><label for="editTaskDescription">Notes</label><textarea id="editTaskDescription" rows="3" maxlength="1000"></textarea><button type="submit" class="primary-button">Save changes <span>↗</span></button></form></dialog>
+  <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+</body>
+</html>
